@@ -15,12 +15,14 @@
             v-for="(dataset, idx) of chartData.datasets"
             :key="idx"
             @hide-chart="hideChart"
+            @update-screen="updateScreen"
             v-bind:idx="idx"
             v-bind:dataset="dataset"
             v-bind:color="dataset.backgroundColor !== 'transparent'
                   ? dataset.backgroundColor
                   : dataset.borderColor"
         />
+<!--        <div>Screen: {{screenWidth}}x{{screenHeight}}</div>-->
       </div>
     </div>
   </div>
@@ -35,6 +37,8 @@ export default {
   components: { Chart, LegendItem },
   data: () => ({
     loaded: true,
+    screenHeight: null,
+    screenWidth: null,
   }),
   computed: {
     chartData() {
@@ -189,7 +193,22 @@ export default {
       this.chartData.datasets[idx].hidden = !checked
       this.$children[0].rerender() //called because of non-reactivity
     },
+    updateScreen() {
+      try {
+        this.screenWidth = window.innerWidth
+        this.screenHeight = window.innerHeight
+        this.$children[0].rerender();
+      } catch (e) {
+        return e
+      }
+    }
   },
+  created() {
+    window.addEventListener('resize', this.updateScreen);
+    this.updateScreen();
+  },
+  watch: {
+  }
 }
 </script>
 <style>
@@ -215,7 +234,7 @@ export default {
   padding-left: 7%;
 }
 .chart {
-  /*height: 70vh;*/
+  height: 50vh;
 }
 .legend-container {
   flex:1 0 200px;
