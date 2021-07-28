@@ -101,17 +101,6 @@ export default {
   display: block;
 }
 
-.b-contain:hover input ~ .b-input,
-.b-contain input:focus ~ .b-input {
-  background: var(--checkbox-color);
-  opacity: .5;
-}
-
-.b-contain input:focus ~ .b-input {
-  box-shadow: 0 0 0 2px var(--checkbox-color);
-  opacity: 1;
-}
-
 .b-contain input:checked ~ .b-input {
   background: aliceblue;
   border-color: var(--checkbox-color);

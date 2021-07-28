@@ -46,12 +46,13 @@ export default {
             label: 'Средний чек',
             backgroundColor: 'transparent',
             borderColor: '#A18CD1',
-            borderWidth: 1.4,
+            borderWidth: 1.6,
             hidden: false,
             tension: 0,
             radius: 0,
             categoryPercentage: 0.99,
             barPercentage: 0.99,
+            pointHitRadius: 20,
             yAxisID: 'line-y-axis',
             data: [50, 70, 30, 76, 139, 140, 222, 249, 180, 1800, 215, 127, 47, 50, 70, 30, 76, 39, 40, 22],
             // data: [0],
@@ -67,6 +68,7 @@ export default {
             radius: 0,
             categoryPercentage: 0.99,
             barPercentage: 0.99,
+            pointHitRadius: 20,
             yAxisID: 'line-y-axis',
             data: [222, 249, 180, 800, 215, 127, 50, 70, 30, 76, 139, 140, 47, 50, 70, 30, 76, 39, 40, 22],
             // data: [0],
@@ -110,7 +112,8 @@ export default {
         },
         tooltips: {
           mode: 'index',
-          position: 'average',
+          position: 'nearest',
+          caretSize: 0,
         },
         scales: {
           xAxes: [{
@@ -119,7 +122,7 @@ export default {
               drawTicks: false,
               zeroLineWidth: 2,
               zeroLineColor: 'black',
-              z: 1,
+              z: -1,
             },
             ticks: {
               fontColor: 'black',
@@ -136,7 +139,7 @@ export default {
               drawTicks: false,
               zeroLineWidth: 2,
               zeroLineColor: 'black',
-              z: 1,
+              z: -1,
             },
             ticks: {
               suggestedMin: 10,
@@ -154,7 +157,7 @@ export default {
               drawTicks: false,
               zeroLineWidth: 2,
               zeroLineColor: 'black',
-              z: 1,
+              z: -1,
             },
             ticks: {
               suggestedMin: 100,
