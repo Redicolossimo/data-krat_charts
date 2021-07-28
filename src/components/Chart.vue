@@ -3,12 +3,10 @@ import {
   Bar,
   mixins
 } from 'vue-chartjs'
+const { reactiveProp } = mixins
 export default {
   extends: Bar,
-  mixins: [mixins.reactiveProp],
-  data: () => ({
-
-  }),
+  mixins: [reactiveProp],
   props: {
     chartData: {
       type: Object,
@@ -18,18 +16,15 @@ export default {
       type: Object,
       default: null
     },
-    hideChart: {
-      type: Number,
-      default: null,
-    }
   },
-  mounted () {
+  mounted() {
     this.renderChart(this.chartData, this.options)
   },
-  watch: {
-    chartData () {
+  methods: {
+    rerender () { //Called from parent
       this.renderChart(this.chartData, this.options)
     }
   },
 }
 </script>
+

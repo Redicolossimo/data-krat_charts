@@ -11,15 +11,16 @@
     </div>
     <div class="legend-container">
       <div class="legend">
-          <LegendItem
-              v-for="dataset of chartData.datasets"
-              :key="dataset.data[0] +  Math.random()*100"
-              @hide-chart="hideChart"
-              v-bind:dataset="dataset"
-              v-bind:color="dataset.backgroundColor !== 'transparent'
+        <LegendItem
+            v-for="(dataset, idx) of chartData.datasets"
+            :key="idx"
+            @hide-chart="hideChart"
+            v-bind:idx="idx"
+            v-bind:dataset="dataset"
+            v-bind:color="dataset.backgroundColor !== 'transparent'
                   ? dataset.backgroundColor
                   : dataset.borderColor"
-          />
+        />
       </div>
     </div>
   </div>
@@ -46,19 +47,35 @@ export default {
             backgroundColor: 'transparent',
             borderColor: '#A18CD1',
             borderWidth: 1.4,
+            hidden: false,
             tension: 0,
             radius: 0,
             categoryPercentage: 0.99,
             barPercentage: 0.99,
             yAxisID: 'line-y-axis',
             data: [50, 70, 30, 76, 139, 140, 222, 249, 180, 1800, 215, 127, 47, 50, 70, 30, 76, 39, 40, 22],
-            isDatasetVisible: true,
+            // data: [0],
+          },
+          {
+            type: 'line',
+            label: 'Что-то там',
+            backgroundColor: 'transparent',
+            borderColor: '#448dc4',
+            borderWidth: 1.4,
+            hidden: false,
+            tension: 0,
+            radius: 0,
+            categoryPercentage: 0.99,
+            barPercentage: 0.99,
+            yAxisID: 'line-y-axis',
+            data: [222, 249, 180, 800, 215, 127, 50, 70, 30, 76, 139, 140, 47, 50, 70, 30, 76, 39, 40, 22],
             // data: [0],
           },
           {
             label: 'Возвраты',
             backgroundColor: '#FF7576',
             categoryPercentage: 0.99,
+            hidden: false,
             barPercentage: 0.99,
             yAxisID: 'bar-y-axis',
             data: [0, 0, 0, 20, 10, 12, 33, 22, 4, 0]
@@ -68,6 +85,7 @@ export default {
             backgroundColor: '#80E0E5',
             categoryPercentage: 0.99,
             barPercentage: 0.99,
+            hidden: false,
             yAxisID: 'bar-y-axis',
             data: [0, 0, 0, 40, 39, 10, 40, 39, 80, 40]
           },
@@ -76,6 +94,7 @@ export default {
             backgroundColor: '#FFDA93',
             categoryPercentage: 0.99,
             barPercentage: 0.99,
+            hidden: false,
             yAxisID: 'bar-y-axis',
             data: [0, 0, 0, 26, 39, 10, 52, 39, 80, 40]
           },
@@ -87,7 +106,7 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
-          display: true,
+          display: false,
         },
         tooltips: {
           mode: 'index',
@@ -163,20 +182,10 @@ export default {
 
   },
   methods: {
-    hideChart(label, checked) {
-      console.log('LABEL',label)
-      console.log('COMPLETED',checked)
-      console.log(this.chartData.datasets[0].label)
-      console.log('RESULT',this.chartData.datasets[0].label === label)
-      console.log('DATA',this.chartData.datasets[0].data)
-      this.chartData.datasets[0].data = [0]
-      // console.log('DATA2',this.chartData.datasets[0].data)
+    hideChart(idx, checked) {
+      this.chartData.datasets[idx].hidden = !checked
+      this.$children[0].rerender() //called because of non-reactivity
     },
-  },
-  watch: {
-    chartData () {
-      this.renderChart(this.chartData, this.options)
-    }
   },
 }
 </script>

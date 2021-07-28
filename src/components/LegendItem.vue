@@ -2,7 +2,7 @@
   <label
       class="b-contain"
       :style="cssProps"
-      @click="$emit('hide-chart', dataset.label, !checked)"
+      @click="$emit('hide-chart', idx, !checked)"
   >
     <span>{{ dataset.label }}</span>
     <input type="checkbox" id="checkbox" v-model="checked">
@@ -21,6 +21,7 @@ export default {
     color: {
       type: String,
     },
+    idx: null
   },
   data: () => ({
     checked: true,
